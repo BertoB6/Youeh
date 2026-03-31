@@ -8,7 +8,587 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Reset e Configurações Gerais */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #00d9ff;
+      --primary-dark: #00a8cc;
+      --secondary: #7b61ff;
+      --bg-dark: #0a0a0f;
+      --bg-card: #121218;
+      --bg-section: #0f0f15;
+      --text-light: #f0f0f0;
+      --text-muted: #a0a0b0;
+      --border-color: #252530;
+      --success: #00ff9d;
+      --shadow: rgba(0, 217, 255, 0.1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    h3 {
+      font-size: 2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    h4 {
+      font-size: 1.4rem;
+      color: var(--text-light);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 15px var(--shadow);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 217, 255, 0.25);
+    }
+
+    .btn-small {
+      display: inline-block;
+      background: transparent;
+      color: var(--primary);
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 2px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-small:hover {
+      background-color: var(--primary);
+      color: var(--bg-dark);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 20px 0;
+      background-color: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .logo span {
+      color: var(--text-light);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 180px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    .hero-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-subtitle:before {
+      content: '>';
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .hero-desc {
+      font-size: 1.3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 20px;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .avatar-container {
+      width: 350px;
+      height: 350px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      animation: morphing 15s infinite;
+      border: 2px solid var(--primary);
+    }
+
+    .avatar-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @keyframes morphing {
+      0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+      25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+      50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+      75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+      100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    }
+
+    /* Social Icons - APENAS INSTA E LINKEDIN */
+    .social-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 40px;
+    }
+
+    .social-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+    }
+
+    .social-icon:hover {
+      background-color: var(--primary);
+      color: var(--bg-dark);
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    /* About Section */
+    .about {
+      background-color: var(--bg-section);
+      position: relative;
+    }
+
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    /* Soluções - Versão Minimalista */
+    .solutions {
+      position: relative;
+      background-color: var(--bg-dark);
+    }
+
+    .solutions-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .solutions-header h2 {
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+
+    .solutions-header h2:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .services-list {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(160, 160, 176, 0.1);
+    }
+
+    .service-item:last-child {
+      border-bottom: none;
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .service-content {
+      flex: 1;
+    }
+
+    .service-content h4 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: var(--text-light);
+    }
+
+    .service-content p {
+      font-size: 1rem;
+      margin-bottom: 0;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* PROJETOS - 5 EM LINHA COM DESIGN SIMPLES */
+    .projects {
+      background-color: var(--bg-section);
+      position: relative;
+    }
+
+    .projects h2 {
+      margin-bottom: 40px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 992px) {
+      .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .project-card {
+      background-color: var(--bg-card);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+    }
+
+    .project-image {
+      height: 150px;
+      background-color: var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-content {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .project-content p {
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Botão Ver Site - SIMPLES, SEM CORES, SEM CSS */
+    .project-link {
+      margin-top: auto;
+      font-size: 0.85rem;
+    }
+
+    .project-link a {
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-decoration-color: rgba(160, 160, 176, 0.3);
+      transition: color 0.3s ease;
+    }
+
+    .project-link a:hover {
+      color: var(--primary);
+    }
+
+    /* Contact CTA */
+    .contact-cta {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    /* Footer - APENAS INSTA E LINKEDIN */
+    footer {
+      background-color: var(--bg-section);
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-links a {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary);
+      color: var(--bg-dark);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Responsividade */
+    @media (max-width: 992px) {
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2.2rem; }
+      
+      .hero-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .hero-subtitle {
+        justify-content: center;
+      }
+      
+      .about-content {
+        flex-direction: column;
+      }
+      
+      .avatar-container {
+        width: 280px;
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .social-group {
+        justify-content: center;
+      }
+      
+      .service-item {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .service-icon {
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.8rem; }
+      
+      section {
+        padding: 60px 0;
+      }
+      
+      .avatar-container {
+        width: 220px;
+        height: 220px;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Header simplificado -->
@@ -22,30 +602,30 @@
   <section class="hero" id="home">
     <div class="container hero-content">
       <div class="hero-text">
-        <div class="hero-subtitle">Desenvolvedor Web & Automações</div>
         <h1>Berto Alexandre</h1>
         <p class="hero-desc">
           Trabalho com desenvolvimento de sites, automações e sistemas que geram resultados.
         </p>
         
         <div class="hero-cta">
-          <a href="trabalho.html" class="btn">Vamos Trabalhar Juntos</a>
+          <a href="https://wa.me/258858112264" class="btn">Vamos Trabalhar Juntos</a>
           <a href="#solutions" class="btn-small">O Que Posso Fazer</a>
         </div>
-        <div class="social-links" style="margin-top: 40px;">
-          <a href="https://www.linkedin.com/in/berto-alexandre-30a865377?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        </div>
-
         
-        <div class="social-links" style="margin-top: 40px;">
-          <a href="https://www.instagram.com/bert.oalexandre?igsh=aHFmc2p1MDU5M2k3" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <!-- Grupo de redes sociais - APENAS INSTA E LINKEDIN -->
+        <div class="social-group">
+          <a href="https://www.linkedin.com/in/berto-alexandre-30a865377?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-icon" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://www.instagram.com/berto.main?igsh=aHFmc2p1MDU5M2k3" target="_blank" class="social-icon" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
         </div>
       </div>
 
       <div class="hero-image">
         <div class="avatar-container">
-          <img src="bobb.jpg" alt="marca_berto">
-          <div class="avatar"></div>
+          <img src="bobb.jpg" alt="Berto Alexandre - Desenvolvedor">
         </div>
       </div>
     </div>
@@ -60,88 +640,208 @@
         <div class="about-text">
           <p>
             Sou <strong>Berto Alexandre</strong>, crio sites, automações e sistemas
-            que resolvem problemas reais e impulsionam negócios. Trabalho com tecnologia para ajudar a resolver os problemas dos cliente.
+            que resolvem problemas reais e impulsionam negócios. Trabalho com tecnologia para ajudar a resolver os problemas dos clientes.
           </p>
           <p>
             Com experiência em desenvolvimento web, meu objetivo é entregar soluções 
             que não apenas funcionam, mas também agregam valor real e melhoram processos.
           </p>
         </div>
+      </div>
+    </div>
+  </section>
 
   <!-- O Que Posso Fazer -->
   <section class="solutions" id="solutions">
     <div class="container">
-      <h2>O Que Posso Fazer</h2>
+      <div class="solutions-header">
+        <h2>O Que Posso Fazer</h2>
+        <p>Soluções personalizadas para seu negócio</p>
+      </div>
       
-      <div class="solutions-grid">
-        <div class="solution-card">
-          <i class="fas fa-shopping-cart"></i>
-          <h4>Loja Virtual & e-Commerce</h4>
-          <p>Sistemas completos de vendas online</p>
-          <ul>
-            <li>Carrinho de compras</li>
-            <li>Pagamentos automaticos</li>
-            <li></li>
-            <li>Gestão de produtos</li>
-          </ul>
+      <div class="services-list">
+        <div class="service-item">
+          <div class="service-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="service-content">
+            <h4>Loja Virtual & E-commerce</h4>
+            <p>Criação de lojas online completas com carrinho de compras, pagamentos automáticos e gestão de produtos.</p>
+          </div>
         </div>
         
-        <div class="solution-card">
-          <i class="fas fa-robot"></i>
-          <h4>Automações & Bots</h4>
-          <p>Automatização de processos e tarefas</p>
-          <ul>
-            <li>Bots para WhatsApp</li>
-            <li>Chatbots inteligentes</li>
-            <li>Automação de marketing</li>
-            <li></li>
-          </ul>
-        </div>
-        
-        <div class="solution-card">
-          <i class="fas fa-globe"></i>
-          <h4>Sites & Aplicações Web</h4>
-          <p>Desenvolvimento de plataformas online</p>
-          <ul>
-            <li>Sites institucionais</li>
-            <li>Páginas de vendas </li>
-            <li>Portfolio</li>
-            <li>Dashboards</li>
-            <li>Sites para negocios locais</li>
-          </ul>
-        </div>
+        <div class="service-item">
+          <div class="service-icon">
+            <i class="fas fa-globe"></i>
+          </div>
+          <div class="service-content">
+            <h4>Sites & Aplicações Web</h4>
+            <p>Sites institucionais, páginas de vendas, portfólios, dashboards e sites para negócios locais.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Projectos -->
-  
+  <!-- PROJETOS - 5 PROJETOS EM LINHA -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <h2>Projetos Recentes</h2>
       
+      <div class="projects-grid">
+        <!-- Projeto 1: Meldiva -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="meldiva.png" alt="Meldiva">
+          </div>
+          <div class="project-content">
+            <h3>Meldiva</h3>
+            <p>Loja online de produtos naturais</p>
+            <div class="project-link">
+              <a href="https://meldiva.com" target="_blank">ver site</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projeto 2: Pretholas Loja Desportiva -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="pretholas.png" alt="Pretholas Loja Desportiva">
+          </div>
+          <div class="project-content">
+            <h3>Pretholas</h3>
+            <p>Loja de artigos desportivos</p>
+            <div class="project-link">
+              <a href="https://pretholas-v2.vercel.app/" target="_blank">ver site</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projeto 3: Jinho Store -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="jinho.png" alt="Jinho Store">
+          </div>
+          <div class="project-content">
+            <h3>Jinho Store</h3>
+            <p>Loja de Recargas de Megabytes & Diamantes Free Fire</p>
+            <div class="project-link">
+              <a href="https://jinho-recargas.vercel.app/" target="_blank">ver site</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projeto 4: Vexabot -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="vexabot.png" alt="Vexabot">
+          </div>
+          <div class="project-content">
+            <h3>Vexabot</h3>
+            <p>Bot de Divulgação em grupos do Whatsapp</p>
+            <div class="project-link">
+              <a href="https://robot-divulgacao.netlify.app/" target="_blank">ver site</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projeto 5: Crazy Store -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="zona.jpg" alt="ZonaXP">
+          </div>
+          <div class="project-content">
+            <h3>ZonaXP</h3>
+            <p>Loja de jogos online</p>
+            <div class="project-link">
+              <a href="https://zonaxp.vercel.app/" target="_blank">ver site</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Botão Vamos Trabalhar Juntos -->
       <div class="contact-cta">
-        <a href="formulario.html" class="btn">Vamos Trabalhar Juntos</a>
+        <a href="projetos.html" class="btn">Ver todos projetos</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer - APENAS INSTA E LINKEDIN -->
   <footer>
     <div class="container footer-content">
       <div class="social-links">
-        <a href="https://github.com/bertoalexandre" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/berto-alexandre-30a865377?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.linkedin.com/in/berto-alexandre-30a865377?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://www.instagram.com/bert.oalexandre?igsh=aHFmc2p1MDU5M2k3" target="_blank"><i class="fab fa-instagram"></i></a>
       </div>
       
       <p class="copyright">
-        &copy; <span id="currentYear"></span> Berto Alexandre. De uma ideia para um site.
-      </p>
-      
-      <p class="code-font" style="font-size: 0.8rem; color: var(--text-muted);">
+        &copy; <span id="currentYear"></span> Berto Alexandre.
       </p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Atualizar ano no footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+    // Efeito de digitação no subtítulo
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    const originalText = heroSubtitle.textContent;
+    const typingSpeed = 100;
+    
+    heroSubtitle.textContent = '';
+    
+    let i = 0;
+    function typeWriter() {
+      if (i < originalText.length) {
+        heroSubtitle.textContent += originalText.charAt(i);
+        i++;
+        setTimeout(typeWriter, typingSpeed);
+      }
+    }
+    
+    setTimeout(typeWriter, 500);
+    
+    // Smooth Scroll para links âncora
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if(targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if(targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // Animação de entrada para os elementos
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.service-item, .project-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
