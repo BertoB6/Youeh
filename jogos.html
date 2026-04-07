@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projetos FF & Jogos | Berto Alexandre</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #00d9ff;
+      --secondary: #7b61ff;
+      --bg-dark: #0a0a0f;
+      --bg-card: #121218;
+      --bg-section: #0f0f15;
+      --text-light: #f0f0f0;
+      --text-muted: #a0a0b0;
+      --border-color: #252530;
+      --game-glow: rgba(0, 217, 255, 0.3);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      padding: 20px 0;
+      background-color: var(--bg-dark);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--text-light);
+    }
+
+    .page-hero {
+      text-align: center;
+      padding: 60px 0 40px;
+    }
+
+    .page-hero h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+
+    .page-hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      padding: 40px 0;
+    }
+
+    .project-card {
+      background-color: var(--bg-card);
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 15px 40px var(--game-glow);
+    }
+
+    .phone-mockup {
+      background-color: #111;
+      border-radius: 32px;
+      padding: 12px 8px;
+      position: relative;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .phone-screen {
+      background-color: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      height: 480px;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 25px;
+      background-color: #111;
+      border-radius: 20px;
+      z-index: 10;
+    }
+
+    .project-preview {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .project-preview iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .preview-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 5;
+      cursor: default;
+    }
+
+    .preview-info {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      z-index: 20;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+      font-weight: 500;
+      pointer-events: none;
+    }
+
+    .preview-info i {
+      margin-right: 5px;
+      font-size: 0.7rem;
+    }
+
+    .project-content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    .project-type {
+      font-size: 0.8rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: inline-block;
+      background: rgba(0, 217, 255, 0.1);
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      border: 1.5px solid var(--primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .project-link:hover {
+      background-color: var(--primary);
+      color: var(--bg-dark);
+    }
+
+    .cta-card {
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.2), rgba(37, 211, 102, 0.05));
+      border: 2px solid #25D366;
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .cta-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(37, 211, 102, 0.2);
+    }
+
+    .cta-card i {
+      font-size: 3.5rem;
+      color: #25D366;
+      margin-bottom: 20px;
+    }
+
+    .cta-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--text-light);
+    }
+
+    .cta-card p {
+      color: var(--text-muted);
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+
+    .cta-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: white;
+      padding: 14px 35px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .cta-whatsapp:hover {
+      background: #128C7E;
+      transform: scale(1.02);
+    }
+
+    .game-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, #ff4757, #ff6b81);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      z-index: 25;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .ff-badge {
+      background: linear-gradient(135deg, #ff6b35, #f7b731);
+    }
+
+    footer {
+      background-color: var(--bg-section);
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      margin-top: 40px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .social-links a {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      color: var(--text-light);
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary);
+      color: var(--bg-dark);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .page-hero h1 {
+        font-size: 1.8rem;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      .phone-screen {
+        height: 450px;
+      }
+      .cta-card {
+        padding: 30px 20px;
+      }
+      .cta-card h3 {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .phone-screen {
+        height: 400px;
+      }
+      .cta-whatsapp {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+      }
+      .preview-info {
+        font-size: 0.6rem;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">← Berto<span>Main</span></a>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Projetos FF & Jogos</h1>
+      <p>Sites desenvolvidos para lojad Free Fire e Jogos</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="projects-grid" id="projectsGrid"></div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/berto-alexandre-30a865377" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/berto.main?igsh=aHFmc2p1MDU5M2k3" target="_blank"><i class="fab fa-instagram"></i></a>
+      </div>
+      <p class="copyright">&copy; <span id="currentYear"></span> Berto Alexandre. Sites para comunidade gamers.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // LISTA DE PROJETOS FF E JOGOS (6 projetos)
+    const projects = [
+      { 
+        name: "Jinho Recargas", 
+        url: "https://jinho-recargas.vercel.app/", 
+        type: "Loja Diamantes FF",
+        game: "Free Fire"
+      },
+      { 
+        name: "Zona XP", 
+        url: "https://zonaxp.vercel.app/", 
+        type: "Comunidade Gamer",
+        game: "Multi Jogos"
+      },
+      { 
+        name: "Garena Shopping", 
+        url: "https://bertob6.github.io/Garena-Shopping/", 
+        type: "Loja de Acc e Diamantee",
+        game: "Free Fire"
+      },
+      { 
+        name: "GS Shopping", 
+        url: "https://gs-shopping.vercel.app/", 
+        type: "Loja de Dimantes",
+        game: "Free Fire"
+      },
+      { 
+        name: "Crazy Store", 
+        url: "https://crazy-store.netlify.app/", 
+        type: "Loja de Jogos",
+        game: "Plantaforma de jogos"
+      }
+    ];
+
+    const projectsGrid = document.getElementById('projectsGrid');
+    
+    // Função para criar card com iframe não interativo
+    function createProjectCard(project) {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      
+      const badgeClass = project.game === 'Free Fire' ? 'ff-badge' : '';
+      
+      card.innerHTML = `
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="project-preview">
+              <iframe 
+                src="${project.url}" 
+                loading="lazy"
+                title="${project.name}"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
+                style="pointer-events: none;"
+              ></iframe>
+              <div class="preview-overlay"></div>
+            </div>
+            <div class="preview-info">
+              <i class="fas fa-gamepad"></i> Visualize abaixo
+            </div>
+            <div class="game-badge ${badgeClass}">
+              <i class="fas fa-fire"></i> ${project.game}
+            </div>
+          </div>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">${project.name}</h3>
+          <span class="project-type">${project.type}</span>
+          <a href="${project.url}" target="_blank" class="project-link">
+            <i class="fas fa-external-link-alt"></i> Ver site completo
+          </a>
+        </div>
+      `;
+      return card;
+    }
+
+    function createCTACard() {
+      const ctaCard = document.createElement('div');
+      ctaCard.className = 'cta-card';
+      ctaCard.innerHTML = `
+        <i class="fab fa-whatsapp"></i>
+        <h3>Quer um site para sua loja FF ou de Jogos?</h3>
+        <p>Clique abaixo</p>
+        <a href="https://wa.me/258858112264?text=Quero%20fazer%20um%20site%20para%20Free%20Fire%20ou%20jogos" target="_blank" class="cta-whatsapp">
+          <i class="fab fa-whatsapp"></i> Pedir Site
+        </a>
+        <p style="margin-top: 15px; font-size: 0.8rem;">✅ Comece hoje a vender no site por apenas 50MT</p>
+      `;
+      return ctaCard;
+    }
+
+    // Adicionar os primeiros 2 projetos
+    for (let i = 0; i < 2; i++) {
+      projectsGrid.appendChild(createProjectCard(projects[i]));
+    }
+    
+    // 1º CTA - NO MEIO
+    projectsGrid.appendChild(createCTACard());
+    
+    // Adicionar os últimos 3 projetos
+    for (let i = 2; i < projects.length; i++) {
+      projectsGrid.appendChild(createProjectCard(projects[i]));
+    }
+    
+    // 2º CTA - NO FINAL
+    projectsGrid.appendChild(createCTACard());
+
+    // Animação de entrada
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.project-card, .cta-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
